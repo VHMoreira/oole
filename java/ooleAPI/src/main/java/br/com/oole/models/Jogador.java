@@ -9,7 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Jogador implements Serializable{
@@ -34,6 +38,9 @@ public class Jogador implements Serializable{
 	
 	@OneToMany(mappedBy = "jogador")
 	private List<Contato> contatos = new ArrayList<Contato>();
+	
+	@ManyToMany(mappedBy = "jogadores")
+	private List<Olheiro> olheiros = new ArrayList<Olheiro>();
 
 	
 	public Jogador() {
@@ -132,7 +139,7 @@ public class Jogador implements Serializable{
 		this.problemaSaude = problemaSaude;
 	}
 	
-
+	
 	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
@@ -182,6 +189,17 @@ public class Jogador implements Serializable{
 		this.senha = senha;
 	}
 	
+	public List<Olheiro> getOlheiros() {
+		return olheiros;
+	}
+
+	public void setOlheiros(List<Olheiro> olheiros) {
+		this.olheiros = olheiros;
+	}
+
+
+
+
 
 	// hashcode e equals criado baseado SOMENTE no id
 	@Override

@@ -8,7 +8,7 @@ public class NewJogadorDTO {
 	private String senha;
 	
 	private String nome;
-	private Date dataNascimento;
+	private String dataNascimento;
 	private String cpf;
 	private String sexo;
 	private String posicao;
@@ -22,7 +22,7 @@ public class NewJogadorDTO {
 	
 	
 	
-	public NewJogadorDTO(String login, String senha, String nome, Date dataNascimento, String cpf, String sexo,
+	public NewJogadorDTO(String login, String senha, String nome, String dataNascimento, String cpf, String sexo,
 			String posicao, String problemaSaude, String cep, String endereco, String email, String telefone) {
 		super();
 		this.login = login;
@@ -58,10 +58,10 @@ public class NewJogadorDTO {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Date getDataNascimento() {
+	public String getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(String dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 	public String getCpf() {

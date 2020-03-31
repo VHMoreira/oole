@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Contato implements Serializable{
@@ -22,22 +25,23 @@ public class Contato implements Serializable{
 	
 	private String telefone;
 	
-	
+	@ManyToOne
 	private Jogador jogador;
 	
-	
+	@ManyToOne
 	private Olheiro olheiro;
 	
 	public Contato() {
 		super();
 	}
 
-
-	public Contato(Integer id, String email, String telefone) {
+	public Contato(Integer id, String email, String telefone, Jogador jogador, Olheiro olheiro) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.telefone = telefone;
+		this.jogador = jogador;
+		this.olheiro = olheiro;
 	}
 
 
@@ -70,11 +74,10 @@ public class Contato implements Serializable{
 		this.telefone = telefone;
 	}
 
-
+	@JsonIgnore
 	public Jogador getJogador() {
 		return jogador;
 	}
-
 
 	public void setJogador(Jogador jogador) {
 		this.jogador = jogador;
@@ -82,7 +85,7 @@ public class Contato implements Serializable{
 	
 	
 
-
+	@JsonIgnore
 	public Olheiro getOlheiro() {
 		return olheiro;
 	}

@@ -9,8 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Olheiro implements Serializable{
@@ -24,26 +27,35 @@ public class Olheiro implements Serializable{
 	private Date dataNascimento;
 	private String cpf;
 	private String sexo;
+	private String tipo;
+	private String login;
+	private String senha;
 	
 	@OneToMany(mappedBy = "olheiro")
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	
 	@OneToMany(mappedBy = "olheiro")
 	private List<Contato> contatos = new ArrayList<Contato>();
+	
+	@ManyToMany
+	private List<Jogador> jogadores = new ArrayList<Jogador>();
 
 	
 	public Olheiro() {
 		super();
 	}
-	
-	
-	public Olheiro(Integer id, String nome, Date dataNascimento, String cpf, String sexo) {
+
+	public Olheiro(Integer id, String nome, Date dataNascimento, String cpf, String sexo, String tipo, String login,
+			String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.cpf = cpf;
 		this.sexo = sexo;
+		this.tipo = tipo;
+		this.login = login;
+		this.senha = senha;
 	}
 
 
@@ -106,7 +118,6 @@ public class Olheiro implements Serializable{
 		this.enderecos = enderecos;
 	}
 
-
 	public List<Contato> getContatos() {
 		return contatos;
 	}
@@ -116,6 +127,39 @@ public class Olheiro implements Serializable{
 		this.contatos = contatos;
 	}
 
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	@JsonIgnore
+	public List<Jogador> getJogadores() {
+		return jogadores;
+	}
+
+	public void setJogadores(List<Jogador> jogadores) {
+		this.jogadores = jogadores;
+	}
 
 	// hashcode e equals criado baseado SOMENTE no id
 	@Override

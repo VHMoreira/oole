@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Endereco implements Serializable{
@@ -20,17 +23,24 @@ public class Endereco implements Serializable{
 	
 	private String endereco;
 	
-	
+	@ManyToOne
 	private Olheiro olheiro;
 	
-	
+	@ManyToOne
 	private Jogador jogador;
+	
 
-	public Endereco(Integer id, String cep, String endereco) {
+	public Endereco() {
+		super();
+	}
+
+	public Endereco(Integer id, String cep, String endereco, Olheiro olheiro, Jogador jogador) {
 		super();
 		this.id = id;
 		this.cep = cep;
 		this.endereco = endereco;
+		this.olheiro = olheiro;
+		this.jogador = jogador;
 	}
 
 	public Integer getId() {
@@ -56,7 +66,8 @@ public class Endereco implements Serializable{
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}	
-
+	
+	@JsonIgnore
 	public Jogador getJogador() {
 		return jogador;
 	}
@@ -65,6 +76,7 @@ public class Endereco implements Serializable{
 		this.jogador = jogador;
 	}
 	
+	@JsonIgnore
 	public Olheiro getOlheiro() {
 		return olheiro;
 	}
