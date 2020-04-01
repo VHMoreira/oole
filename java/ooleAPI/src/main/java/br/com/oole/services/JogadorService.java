@@ -13,10 +13,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.oole.DAO.ContatoDAO;
-import br.com.oole.DAO.EnderecoDAO;
 import br.com.oole.DAO.JogadorDAO;
+import br.com.oole.dto.JogadorDTO;
 import br.com.oole.dto.NewJogadorDTO;
-import br.com.oole.models.Endereco;
+import br.com.oole.dto.UpdateJogadorDTO;
 import br.com.oole.models.Jogador;
 import br.com.oole.services.exceptions.DataIntegrityException;
 import br.com.oole.services.exceptions.ObjectNotFoundException;
@@ -44,11 +44,11 @@ public class JogadorService {
 		return dao.save(obj);
 	}
 
-//	public Jogador update(Jogador obj) {
-//		Jogador newObj = find(obj.getId());
-//		updateData(newObj, obj);
-//		return dao.save(newObj);
-//	}
+	public Jogador update(UpdateJogadorDTO obj, Integer id) {
+		Jogador newObj = find(id);
+		updateData(newObj, obj);
+		return dao.save(newObj);
+	}
 
 	public void delete(Integer id) {
 		find(id);
@@ -70,16 +70,28 @@ public class JogadorService {
 
 	public Jogador fromDTO(NewJogadorDTO objDto) throws ParseException {
 		SimpleDateFormat jdf = new SimpleDateFormat("dd/MM/yyyy");
-		return new Jogador(null,objDto.getNome(), jdf.parse(objDto.getDataNascimento()), objDto.getCpf(), objDto.getSexo(), objDto.getPosicao(), objDto.getProblemaSaude(), "Jogador", objDto.getLogin(), objDto.getSenha());
+		return new Jogador(null,objDto.getNome(), jdf.parse(objDto.getDataNascimento()), objDto.getCpf(), objDto.getSexo(), objDto.getPosicao(), objDto.getProblemaSaude(), "Jogador", '@'+objDto.getLogin(), objDto.getSenha());
 	}
 
-//	
+	
 //	public Jogador fromDTO(JogadorDTO objDto) {
-//		return new Jogador(objDto.getId(), objDto.getNome());
+//		SimpleDateFormat jdf = new SimpleDateFormat("dd/MM/yyyy");
+//		return new Jogador(null, objDto.getNome(), jdf.parse(objDto.getDataNascimento()), null, objDto.getSexo(), objDto);
+//	}
+//	
+//	public Jogador fromDTO(UpdateJogadorDTO objDto) {
+//		SimpleDateFormat jdf = new SimpleDateFormat("dd/MM/yyyy");
+//		return new Jogador(null, n, jdf.parse(objDto.getDataNascimento()), null, objDto.getSexo(), objDto);
 //	}
 
-//	private void updateData(Jogador newObj, Jogador obj) {
-//		newObj.setNome(obj.getNome());
-//	}
+	private void updateData(Jogador newObj, UpdateJogadorDTO obj) {
+		newObj.setLogin(obj.getLogin());
+		newObj.setPosicao(obj.getPosicao());
+		newObj.setProblemaSaude(obj.getProblemaSaude());
+		newObj.getEnderecos().get(0).setCep(obj.getCep());
+		newObj.getEnderecos().get(0).setEndereco(obj.getEndereco());
+		newObj.getContatos().get(0).setEmail(obj.getEmail());
+		newObj.getContatos().get(0).setTelefone(obj.getTelefone());
+	}
 
 }

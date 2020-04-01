@@ -3,17 +3,26 @@ package br.com.oole.resources;
 import java.net.URI;
 import java.text.ParseException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.oole.dto.JogadorDTO;
 import br.com.oole.dto.NewJogadorDTO;
+import br.com.oole.dto.UpdateJogadorDTO;
 import br.com.oole.models.Contato;
 import br.com.oole.models.Endereco;
 import br.com.oole.models.Jogador;
@@ -21,7 +30,8 @@ import br.com.oole.services.ContatoService;
 import br.com.oole.services.EnderecoService;
 import br.com.oole.services.JogadorService;
 
-@RestController(value = "/jogador")
+@RestController
+@RequestMapping(value = "/jogadores")
 public class JogadorResource {
 	
 	@Autowired
@@ -34,12 +44,15 @@ public class JogadorResource {
 	private ContatoService contatoService;
 	
 	@GetMapping
-	public ResponseEntity<List<Jogador>> findAll() {
-		return ResponseEntity.ok(jogadorService.findAll());
+	public ResponseEntity<List<JogadorDTO>> findAll() {
+		List<Jogador> list = jogadorService.findAll();
+		List<JogadorDTO> listDto = list.stream().map(obj -> new JogadorDTO(obj)).collect(Collectors.toList());  
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Jogador> find(@PathVariable Integer id) {
+		System.out.println(id);
 		Jogador obj = jogadorService.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -60,5 +73,31 @@ public class JogadorResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 			.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		Jogador jog = jogadorService.find(id);
+		enderecoService.delete(jog.getEnderecos().get(0).getId());
+		contatoService.delete(jog.getContatos().get(0).getId());
+		jogadorService.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/page", method=RequestMethod.GET)
+	public ResponseEntity<Page<JogadorDTO>> findPage(
+			@RequestParam(value="page", defaultValue="0") Integer page, 
+			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
+			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
+			@RequestParam(value="direction", defaultValue="ASC") String direction) {
+		Page<Jogador> list = jogadorService.findPage(page, linesPerPage, orderBy, direction);
+		Page<JogadorDTO> listDto = list.map(obj -> new JogadorDTO(obj));  
+		return ResponseEntity.ok().body(listDto);
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<Void> update(@RequestBody UpdateJogadorDTO objDto, @PathVariable Integer id) {
+		jogadorService.update(objDto, id);
+		return ResponseEntity.noContent().build();
 	}
 }

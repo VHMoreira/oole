@@ -189,6 +189,7 @@ public class Jogador implements Serializable{
 		this.senha = senha;
 	}
 	
+	
 	public List<Olheiro> getOlheiros() {
 		return olheiros;
 	}
