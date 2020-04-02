@@ -1,8 +1,11 @@
 package br.com.oole.dto;
 
+import java.io.Serializable;
+import java.util.Set;
+
 import br.com.oole.models.Jogador;
 
-public class JogadorDTO {
+public class JogadorDTO implements Serializable{
 	
 	private String login;
 	private String nome;
@@ -25,11 +28,11 @@ public class JogadorDTO {
 		this.sexo = obj.getSexo();
 		this.posicao = obj.getPosicao();
 		this.problemaSaude = obj.getProblemaSaude();
-		this.cep = obj.getEnderecos().get(0).getCep();
-		this.endereco = obj.getEnderecos().get(0).getEndereco();
-		this.email = obj.getContatos().get(0).getEmail();
-		this.telefone = obj.getContatos().get(0).getTelefone();
-	}
+		this.cep = obj.getEndereco().getCep();
+		this.endereco = obj.getEndereco().getEndereco();
+		this.email = obj.getEmail();
+		this.telefone = obj.getTelefone();
+}
 
 	public String getLogin() {
 		return login;

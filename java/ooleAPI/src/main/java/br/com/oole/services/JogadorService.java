@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import br.com.oole.DAO.ContatoDAO;
 import br.com.oole.DAO.JogadorDAO;
 import br.com.oole.dto.JogadorDTO;
 import br.com.oole.dto.NewJogadorDTO;
@@ -27,12 +26,6 @@ public class JogadorService {
 	@Autowired
 	private JogadorDAO dao;
 	
-	@Autowired
-	private EnderecoService endService;
-	
-	@Autowired
-	private ContatoDAO contDao;
-
 	public Jogador find(Integer id) {
 		Optional<Jogador> obj = dao.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -68,16 +61,16 @@ public class JogadorService {
 		return dao.findAll(pageRequest);
 	}
 
-	public Jogador fromDTO(NewJogadorDTO objDto) throws ParseException {
-		SimpleDateFormat jdf = new SimpleDateFormat("dd/MM/yyyy");
-		return new Jogador(null,objDto.getNome(), jdf.parse(objDto.getDataNascimento()), objDto.getCpf(), objDto.getSexo(), objDto.getPosicao(), objDto.getProblemaSaude(), "Jogador", '@'+objDto.getLogin(), objDto.getSenha());
-	}
+//	public Jogador fromDTO(NewJogadorDTO objDto) throws ParseException {
+//		SimpleDateFormat jdf = new SimpleDateFormat("dd/MM/yyyy");
+//		return new Jogador(null,objDto.getNome(), jdf.parse(objDto.getDataNascimento()), objDto.getCpf(), objDto.getSexo(), objDto.getPosicao(), objDto.getProblemaSaude(), "Jogador", '@'+objDto.getLogin(), objDto.getSenha());
+//	}
 
 	
-//	public Jogador fromDTO(JogadorDTO objDto) {
-//		SimpleDateFormat jdf = new SimpleDateFormat("dd/MM/yyyy");
-//		return new Jogador(null, objDto.getNome(), jdf.parse(objDto.getDataNascimento()), null, objDto.getSexo(), objDto);
-//	}
+	public Jogador fromDTO(NewJogadorDTO obj) throws ParseException {
+		SimpleDateFormat jdf = new SimpleDateFormat("dd/MM/yyyy");
+		return new Jogador(null,obj.getNome(),jdf.parse(obj.getDataNascimento()),obj.getCpf(),obj.getSexo(),obj.getPosicao(),obj.getProblemaSaude(), "Jogador", obj.getLogin(), obj.getSenha(),obj.getEmail(),obj.getTelefone(),null);
+	}
 //	
 //	public Jogador fromDTO(UpdateJogadorDTO objDto) {
 //		SimpleDateFormat jdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -88,10 +81,10 @@ public class JogadorService {
 		newObj.setLogin(obj.getLogin());
 		newObj.setPosicao(obj.getPosicao());
 		newObj.setProblemaSaude(obj.getProblemaSaude());
-		newObj.getEnderecos().get(0).setCep(obj.getCep());
-		newObj.getEnderecos().get(0).setEndereco(obj.getEndereco());
-		newObj.getContatos().get(0).setEmail(obj.getEmail());
-		newObj.getContatos().get(0).setTelefone(obj.getTelefone());
+		newObj.getEndereco().setCep(obj.getCep());
+		newObj.getEndereco().setEndereco(obj.getEndereco());
+		newObj.setEmail(obj.getEmail());
+		newObj.setTelefone(obj.getTelefone());
 	}
 
 }

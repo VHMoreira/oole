@@ -3,7 +3,6 @@ package br.com.oole.resources;
 import java.net.URI;
 import java.text.ParseException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,10 +22,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.oole.dto.JogadorDTO;
 import br.com.oole.dto.NewJogadorDTO;
 import br.com.oole.dto.UpdateJogadorDTO;
-import br.com.oole.models.Contato;
 import br.com.oole.models.Endereco;
 import br.com.oole.models.Jogador;
-import br.com.oole.services.ContatoService;
 import br.com.oole.services.EnderecoService;
 import br.com.oole.services.JogadorService;
 
@@ -39,15 +36,12 @@ public class JogadorResource {
 	
 	@Autowired
 	private EnderecoService enderecoService;
-	
-	@Autowired
-	private ContatoService contatoService;
+
 	
 	@GetMapping
-	public ResponseEntity<List<JogadorDTO>> findAll() {
-		List<Jogador> list = jogadorService.findAll();
-		List<JogadorDTO> listDto = list.stream().map(obj -> new JogadorDTO(obj)).collect(Collectors.toList());  
-		return ResponseEntity.ok().body(listDto);
+	public ResponseEntity<List<Jogador>> findAll() {
+		List<Jogador> list = jogadorService.findAll();  
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping("/{id}")
@@ -61,14 +55,9 @@ public class JogadorResource {
 	public ResponseEntity<Void> insert(@RequestBody NewJogadorDTO objDto) throws ParseException {
 		Jogador obj = jogadorService.fromDTO(objDto);
 		Endereco end = new Endereco(null, objDto.getCep(), objDto.getEndereco(), null, obj);
-		Contato cont = new Contato(null, objDto.getEmail(), objDto.getTelefone(), obj, null);
-		
-		obj.getEnderecos().add(end);
-		obj.getContatos().add(cont);
 		
 		obj = jogadorService.insert(obj);
 		enderecoService.insert(end);
-		contatoService.insert(cont);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 			.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -78,26 +67,24 @@ public class JogadorResource {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		Jogador jog = jogadorService.find(id);
-		enderecoService.delete(jog.getEnderecos().get(0).getId());
-		contatoService.delete(jog.getContatos().get(0).getId());
+		enderecoService.delete(jog.getEndereco().getId());
 		jogadorService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(value="/page", method=RequestMethod.GET)
-	public ResponseEntity<Page<JogadorDTO>> findPage(
+	public ResponseEntity<Page<Jogador>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction) {
-		Page<Jogador> list = jogadorService.findPage(page, linesPerPage, orderBy, direction);
-		Page<JogadorDTO> listDto = list.map(obj -> new JogadorDTO(obj));  
-		return ResponseEntity.ok().body(listDto);
+		Page<Jogador> list = jogadorService.findPage(page, linesPerPage, orderBy, direction); 
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> update(@RequestBody UpdateJogadorDTO objDto, @PathVariable Integer id) {
-		jogadorService.update(objDto, id);
+	public ResponseEntity<Void> update(@RequestBody UpdateJogadorDTO obj, @PathVariable Integer id) {
+		jogadorService.update(obj, id);
 		return ResponseEntity.noContent().build();
 	}
 }

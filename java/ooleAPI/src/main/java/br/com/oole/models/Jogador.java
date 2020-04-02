@@ -3,14 +3,19 @@ package br.com.oole.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,19 +30,25 @@ public class Jogador implements Serializable{
 	private Integer id;
 	private String nome;
 	private Date dataNascimento;
+	
+	@JsonIgnore
 	private String cpf;
 	private String sexo;
 	private String posicao;
 	private String problemaSaude;
 	private String tipo;
 	private String login;
+	
+	@JsonIgnore
 	private String senha;
 	
-	@OneToMany(mappedBy = "jogador")
-	private List<Endereco> enderecos = new ArrayList<Endereco>();
+	@Column(unique=true)
+	private String email;
 	
-	@OneToMany(mappedBy = "jogador")
-	private List<Contato> contatos = new ArrayList<Contato>();
+	private String telefone;
+	
+	@OneToOne(mappedBy = "jogador")
+	private Endereco endereco;
 	
 	@ManyToMany(mappedBy = "jogadores")
 	private List<Olheiro> olheiros = new ArrayList<Olheiro>();
@@ -46,13 +57,11 @@ public class Jogador implements Serializable{
 	public Jogador() {
 		super();
 	}
-	
-	
-	
 
-
+	
 	public Jogador(Integer id, String nome, Date dataNascimento, String cpf, String sexo, String posicao,
-			String problemaSaude, String tipo, String login, String senha) {
+			String problemaSaude, String tipo, String login, String senha, String email, String telefone,
+			Endereco endereco) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -64,9 +73,10 @@ public class Jogador implements Serializable{
 		this.tipo = tipo;
 		this.login = login;
 		this.senha = senha;
+		this.email = email;
+		this.telefone = telefone;
+		this.endereco = endereco;
 	}
-
-
 
 
 
@@ -140,25 +150,14 @@ public class Jogador implements Serializable{
 	}
 	
 	
-	public List<Endereco> getEnderecos() {
-		return enderecos;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
 
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
-
-
-	public List<Contato> getContatos() {
-		return contatos;
-	}
-
-
-	public void setContatos(List<Contato> contatos) {
-		this.contatos = contatos;
-	}
-
 
 	public String getTipo() {
 		return tipo;
@@ -200,6 +199,28 @@ public class Jogador implements Serializable{
 
 
 
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
 
 	// hashcode e equals criado baseado SOMENTE no id

@@ -3,14 +3,20 @@ package br.com.oole.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,11 +37,15 @@ public class Olheiro implements Serializable{
 	private String login;
 	private String senha;
 	
-	@OneToMany(mappedBy = "olheiro")
-	private List<Endereco> enderecos = new ArrayList<Endereco>();
+	@OneToOne(mappedBy = "olheiro")
+	private Endereco endereco;
 	
-	@OneToMany(mappedBy = "olheiro")
-	private List<Contato> contatos = new ArrayList<Contato>();
+	@Column(unique=true)
+	private String email;
+	
+	@ElementCollection
+	@CollectionTable(name="TELEFONE")
+	private Set<String> telefones = new HashSet<>();
 	
 	@ManyToMany
 	private List<Jogador> jogadores = new ArrayList<Jogador>();
@@ -45,8 +55,10 @@ public class Olheiro implements Serializable{
 		super();
 	}
 
+	
+
 	public Olheiro(Integer id, String nome, Date dataNascimento, String cpf, String sexo, String tipo, String login,
-			String senha) {
+			String senha, Endereco endereco, String email) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -56,7 +68,10 @@ public class Olheiro implements Serializable{
 		this.tipo = tipo;
 		this.login = login;
 		this.senha = senha;
+		this.endereco = endereco;
+		this.email = email;
 	}
+
 
 
 	public Integer getId() {
@@ -109,22 +124,13 @@ public class Olheiro implements Serializable{
 	}
 	
 
-	public List<Endereco> getEnderecos() {
-		return enderecos;
+	public Endereco getEnderecos() {
+		return endereco;
 	}
 
 
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
-	}
-
-	public List<Contato> getContatos() {
-		return contatos;
-	}
-
-
-	public void setContatos(List<Contato> contatos) {
-		this.contatos = contatos;
+	public void setEndereco(Endereco enderecos) {
+		this.endereco = enderecos;
 	}
 
 
@@ -160,6 +166,31 @@ public class Olheiro implements Serializable{
 	public void setJogadores(List<Jogador> jogadores) {
 		this.jogadores = jogadores;
 	}
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+	public Set<String> getTelefones() {
+		return telefones;
+	}
+
+
+
+	public void setTelefones(Set<String> telefones) {
+		this.telefones = telefones;
+	}
+
+
 
 	// hashcode e equals criado baseado SOMENTE no id
 	@Override
