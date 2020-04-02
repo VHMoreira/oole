@@ -1,23 +1,48 @@
 package br.com.oole.dto;
 
-import java.util.Date;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
+
+import br.com.oole.services.validation.InsertJogador;
+
+@InsertJogador
 public class NewJogadorDTO {
 	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Length(min = 2, max=50, message = "Deve ter no minimo dois caracteres")
 	private String login;
 	private String senha;
 	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Length(min = 2, max=120, message = "Deve ter no minimo dois caracteres")
 	private String nome;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String dataNascimento;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cpf;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String sexo;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String posicao;
 	private String problemaSaude;
 	
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cep;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String endereco;
 	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Email(message = "Email invalido")
 	private String email;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String telefone;
 	
 	

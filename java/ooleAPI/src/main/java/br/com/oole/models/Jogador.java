@@ -37,6 +37,8 @@ public class Jogador implements Serializable{
 	private String posicao;
 	private String problemaSaude;
 	private String tipo;
+	
+	@Column(unique = true)
 	private String login;
 	
 	@JsonIgnore

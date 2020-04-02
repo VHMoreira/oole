@@ -4,6 +4,8 @@ import java.net.URI;
 import java.text.ParseException;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.oole.dto.JogadorDTO;
 import br.com.oole.dto.NewJogadorDTO;
 import br.com.oole.dto.UpdateJogadorDTO;
 import br.com.oole.models.Endereco;
@@ -52,7 +53,7 @@ public class JogadorResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody NewJogadorDTO objDto) throws ParseException {
+	public ResponseEntity<Void> insert(@Valid @RequestBody NewJogadorDTO objDto) throws ParseException {
 		Jogador obj = jogadorService.fromDTO(objDto);
 		Endereco end = new Endereco(null, objDto.getCep(), objDto.getEndereco(), null, obj);
 		
