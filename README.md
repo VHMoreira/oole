@@ -22,7 +22,7 @@ As funcionalidades que cada perfil do sistema deve ter.
 - Realizar atualizações cadastrais
 - Feed com com atividades recentes dos jogadores que segue
 # Arquitetura
-![Alt](img\diagrams\arch_oole.png)
+![Diagrama da Arquitetura da Aplicação](https://github.com/VHMoreira/oole/blob/master/img/diagrams/arch_oole.png)
 Os clientes, ao fazerem uma requisição interagirão, primeiramente, com a camada Rest que a partir de um objeto Model, encapsulará os dados e os enviará para as camadas Service. Na camada Service os models sofrerão alterações, validações e conversões, de acordo com a regra de negócios da aplicação para depois passar os dados para a Camada de DAO, que fará a interação com o Banco de Dados. 
 
 - **Cliente**: É o aplicativo mobile, que fará as requisições à API.
