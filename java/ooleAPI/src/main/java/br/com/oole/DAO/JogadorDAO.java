@@ -10,4 +10,6 @@ public interface JogadorDAO extends JpaRepository<Jogador, Integer>{
 	@Transactional(readOnly = true)
 	Jogador findByEmail(String email);
 	
+	@Transactional(readOnly = true)
+	Jogador findByLogin(String login);
 }

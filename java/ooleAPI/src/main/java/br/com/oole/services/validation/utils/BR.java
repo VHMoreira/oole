@@ -1,11 +1,16 @@
 package br.com.oole.services.validation.utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 public class BR {
 	// CPF
     private static final int[] weightSsn = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
-
-    // CNPJ
-    private static final int[] weightTin = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
 
     private static int calculate(final String str, final int[] weight) {
         int sum = 0;
@@ -24,11 +29,16 @@ public class BR {
      * @return
      */
     public static boolean isValidCPF(final String ssn) {
-    	System.out.println("Validando cpf");
         if ((ssn == null) || (ssn.length() != 11) || ssn.matches(ssn.charAt(0) + "{11}")) return false;
-
         final Integer digit1 = calculate(ssn.substring(0, 9), weightSsn);
         final Integer digit2 = calculate(ssn.substring(0, 9) + digit1, weightSsn);
         return ssn.equals(ssn.substring(0, 9) + digit1.toString() + digit2.toString());
+    }
+    
+    public static boolean isValidCEP(final String cep) throws MalformedURLException{
+        if ((cep == null) || (cep.length() != 8)) return false;
+        String json;
+        URL url = new URL("http://viacep.com.br/ws/"+ cep +"/json");
+        return true;
     }
 }
