@@ -6,19 +6,22 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.oole.models.enums.Perfil;
 
 
 @Entity
@@ -33,7 +36,6 @@ public class Olheiro implements Serializable{
 	private Date dataNascimento;
 	private String cpf;
 	private String sexo;
-	private String tipo;
 	private String login;
 	private String senha;
 	
@@ -49,15 +51,20 @@ public class Olheiro implements Serializable{
 	
 	@ManyToMany
 	private List<Jogador> jogadores = new ArrayList<Jogador>();
-
+	
+	@CollectionTable(name="PERFIL")
+	@ElementCollection(fetch = FetchType.EAGER)
+	private Set<Integer> perfis = new HashSet<Integer>();
+	
 	
 	public Olheiro() {
 		super();
+		addPerfil(Perfil.OLHEIRO);
 	}
 
 	
 
-	public Olheiro(Integer id, String nome, Date dataNascimento, String cpf, String sexo, String tipo, String login,
+	public Olheiro(Integer id, String nome, Date dataNascimento, String cpf, String sexo, String login,
 			String senha, Endereco endereco, String email) {
 		super();
 		this.id = id;
@@ -65,11 +72,11 @@ public class Olheiro implements Serializable{
 		this.dataNascimento = dataNascimento;
 		this.cpf = cpf;
 		this.sexo = sexo;
-		this.tipo = tipo;
 		this.login = login;
 		this.senha = senha;
 		this.endereco = endereco;
 		this.email = email;
+		addPerfil(Perfil.OLHEIRO);
 	}
 
 
@@ -133,15 +140,6 @@ public class Olheiro implements Serializable{
 		this.endereco = enderecos;
 	}
 
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
 	public String getLogin() {
 		return login;
 	}
@@ -189,7 +187,14 @@ public class Olheiro implements Serializable{
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
 	}
+	
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
 
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
+	}
 
 
 	// hashcode e equals criado baseado SOMENTE no id

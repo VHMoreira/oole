@@ -1,12 +1,7 @@
 package br.com.oole.services.validation.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class BR {
 	// CPF
@@ -37,7 +32,6 @@ public class BR {
     
     public static boolean isValidCEP(final String cep) throws MalformedURLException{
         if ((cep == null) || (cep.length() != 8)) return false;
-        String json;
         URL url = new URL("http://viacep.com.br/ws/"+ cep +"/json");
         return true;
     }

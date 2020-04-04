@@ -6,18 +6,23 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.oole.models.enums.Perfil;
 
 
 @Entity
@@ -36,7 +41,6 @@ public class Jogador implements Serializable{
 	private String sexo;
 	private String posicao;
 	private String problemaSaude;
-	private String tipo;
 	
 	@Column(unique = true)
 	private String login;
@@ -55,14 +59,23 @@ public class Jogador implements Serializable{
 	@ManyToMany(mappedBy = "jogadores")
 	private List<Olheiro> olheiros = new ArrayList<Olheiro>();
 
+	@OneToMany(mappedBy = "jogador")
+	private List<Video> videos = new ArrayList<Video>();
+	
+	@CollectionTable(name="PERFIL")
+	@ElementCollection(fetch = FetchType.EAGER)
+	private Set<Integer> perfis = new HashSet<Integer>();
 	
 	public Jogador() {
 		super();
+		addPerfil(Perfil.JOGADOR);
 	}
 
 	
+
+
 	public Jogador(Integer id, String nome, Date dataNascimento, String cpf, String sexo, String posicao,
-			String problemaSaude, String tipo, String login, String senha, String email, String telefone,
+			String problemaSaude, String login, String senha, String email, String telefone,
 			Endereco endereco) {
 		super();
 		this.id = id;
@@ -72,13 +85,14 @@ public class Jogador implements Serializable{
 		this.sexo = sexo;
 		this.posicao = posicao;
 		this.problemaSaude = problemaSaude;
-		this.tipo = tipo;
 		this.login = login;
 		this.senha = senha;
 		this.email = email;
 		this.telefone = telefone;
 		this.endereco = endereco;
+		addPerfil(Perfil.JOGADOR);
 	}
+
 
 
 
@@ -160,16 +174,6 @@ public class Jogador implements Serializable{
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-
-	public String getTipo() {
-		return tipo;
-	}
-	
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-	
 	
 	public String getLogin() {
 		return login;
@@ -223,6 +227,29 @@ public class Jogador implements Serializable{
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+	
+	
+
+
+	public List<Video> getVideos() {
+		return videos;
+	}
+
+
+	public void setVideos(List<Video> videos) {
+		this.videos = videos;
+	}
+
+
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
+	}
+
+
 
 
 	// hashcode e equals criado baseado SOMENTE no id

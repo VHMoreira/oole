@@ -69,7 +69,7 @@ public class JogadorService {
 	
 	public Jogador fromDTO(NewJogadorDTO obj) throws ParseException {
 		SimpleDateFormat jdf = new SimpleDateFormat("dd/MM/yyyy");
-		return new Jogador(null,obj.getNome(),jdf.parse(obj.getDataNascimento()),obj.getCpf(),obj.getSexo(),obj.getPosicao(),obj.getProblemaSaude(), "Jogador", obj.getLogin(), obj.getSenha(),obj.getEmail(),obj.getTelefone(),null);
+		return new Jogador(null,obj.getNome(),jdf.parse(obj.getDataNascimento()),obj.getCpf(),obj.getSexo(),obj.getPosicao(),obj.getProblemaSaude(), obj.getLogin(), obj.getSenha(),obj.getEmail(),obj.getTelefone(),null);
 	}
 //	
 //	public Jogador fromDTO(UpdateJogadorDTO objDto) {
