@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.springframework.lang.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -24,6 +26,7 @@ public class Endereco implements Serializable{
 	private String endereco;
 	
 	@OneToOne
+	@Nullable
 	private Olheiro olheiro;
 	
 	@OneToOne

@@ -62,13 +62,11 @@ public class Jogador implements Serializable{
 	@OneToMany(mappedBy = "jogador")
 	private List<Video> videos = new ArrayList<Video>();
 	
-	@CollectionTable(name="PERFIL")
-	@ElementCollection(fetch = FetchType.EAGER)
-	private Set<Integer> perfis = new HashSet<Integer>();
+	private Perfil perfil;
 	
 	public Jogador() {
 		super();
-		addPerfil(Perfil.JOGADOR);
+		this.perfil = Perfil.JOGADOR;
 	}
 
 	
@@ -90,7 +88,7 @@ public class Jogador implements Serializable{
 		this.email = email;
 		this.telefone = telefone;
 		this.endereco = endereco;
-		addPerfil(Perfil.JOGADOR);
+		this.perfil = Perfil.JOGADOR;
 	}
 
 
@@ -241,12 +239,15 @@ public class Jogador implements Serializable{
 	}
 
 
-	public Set<Perfil> getPerfis() {
-		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	public Perfil getPerfil() {
+		return perfil;
 	}
 
-	public void addPerfil(Perfil perfil) {
-		perfis.add(perfil.getCod());
+
+
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
 	}
 
 

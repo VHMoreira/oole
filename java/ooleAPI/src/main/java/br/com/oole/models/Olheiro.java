@@ -19,6 +19,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.lang.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.oole.models.enums.Perfil;
@@ -52,14 +54,12 @@ public class Olheiro implements Serializable{
 	@ManyToMany
 	private List<Jogador> jogadores = new ArrayList<Jogador>();
 	
-	@CollectionTable(name="PERFIL")
-	@ElementCollection(fetch = FetchType.EAGER)
-	private Set<Integer> perfis = new HashSet<Integer>();
+	private Perfil perfil;
 	
 	
 	public Olheiro() {
 		super();
-		addPerfil(Perfil.OLHEIRO);
+		this.perfil = Perfil.OLHEIRO;
 	}
 
 	
@@ -76,7 +76,7 @@ public class Olheiro implements Serializable{
 		this.senha = senha;
 		this.endereco = endereco;
 		this.email = email;
-		addPerfil(Perfil.OLHEIRO);
+		this.perfil = Perfil.OLHEIRO;
 	}
 
 
@@ -188,13 +188,17 @@ public class Olheiro implements Serializable{
 		this.telefones = telefones;
 	}
 	
-	public Set<Perfil> getPerfis() {
-		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+
+	public Perfil getPerfil() {
+		return perfil;
 	}
 
-	public void addPerfil(Perfil perfil) {
-		perfis.add(perfil.getCod());
+
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
 	}
+
 
 
 	// hashcode e equals criado baseado SOMENTE no id

@@ -2,6 +2,7 @@ package br.com.oole.services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,10 +11,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.oole.DAO.JogadorDAO;
-import br.com.oole.dto.JogadorDTO;
 import br.com.oole.dto.NewJogadorDTO;
 import br.com.oole.dto.UpdateJogadorDTO;
 import br.com.oole.models.Jogador;
@@ -25,6 +26,9 @@ public class JogadorService {
 	
 	@Autowired
 	private JogadorDAO dao;
+	
+	@Autowired
+	private BCryptPasswordEncoder bc;
 	
 	public Jogador find(Integer id) {
 		Optional<Jogador> obj = dao.findById(id);
@@ -69,7 +73,9 @@ public class JogadorService {
 	
 	public Jogador fromDTO(NewJogadorDTO obj) throws ParseException {
 		SimpleDateFormat jdf = new SimpleDateFormat("dd/MM/yyyy");
-		return new Jogador(null,obj.getNome(),jdf.parse(obj.getDataNascimento()),obj.getCpf(),obj.getSexo(),obj.getPosicao(),obj.getProblemaSaude(), obj.getLogin(), obj.getSenha(),obj.getEmail(),obj.getTelefone(),null);
+		String senha = bc.encode(obj.getSenha());
+		Date dataNascimento = jdf.parse(obj.getDataNascimento());
+		return new Jogador(null,obj.getNome(), dataNascimento,obj.getCpf(),obj.getSexo(),obj.getPosicao(),obj.getProblemaSaude(), obj.getLogin(), senha,obj.getEmail(),obj.getTelefone(),null);
 	}
 //	
 //	public Jogador fromDTO(UpdateJogadorDTO objDto) {
