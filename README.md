@@ -1,5 +1,20 @@
-# Oolé
-O Oolé, é um aplicativo criado para ajudar no processo de descobrimento de talentos no futebol. Com ele é possível para jogadores e jogadoras compartilharem seus vídeos de lances e conquistas, seu histórico como jogador e suas informações para que olheiros de todos os lugares possam observa-los. 
+<h1 align="center">
+<br>
+  <img src="https://user-images.githubusercontent.com/32422863/79405121-f102af00-7f69-11ea-8d34-8bab4eaed2b4.png" alt="Oolé app" width="120">
+<br>
+<br>
+Oolé app
+</h1>
+
+<p align="center">O Oolé, é um aplicativo criado para ajudar no processo de descobrimento de talentos no futebol. Com ele é possível para jogadores e jogadoras compartilharem seus vídeos de lances e conquistas, seu histórico como jogador e suas informações para que olheiros de todos os lugares possam observa-los. </p>
+
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License MIT">
+  </a>
+</p>
+
+<hr />
 
 # Funcionalidades
 As funcionalidades que cada perfil do sistema deve ter.
