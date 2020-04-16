@@ -6,7 +6,7 @@
 Oolé app
 </h1>
 
-<p align="center">O Oolé, é um aplicativo criado para ajudar no processo de descobrimento de talentos no futebol. Com ele é possível para jogadores e jogadoras compartilharem seus vídeos de lances e conquistas, seu histórico como jogador e suas informações para que olheiros de todos os lugares possam observa-los. </p>
+<p align="center">O Oolé, é um aplicativo criado para ajudar no processo de decobertas de talentos no futebol. Com ele é possível jogadores compartilharem seus vídeos de lances e conquistas, seu histórico como jogador e suas informações para que olheiros de todos os lugares possam observa-los. </p>
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT">
@@ -57,7 +57,9 @@ POST|/jogadores| Fará uma inserção de<br>um novo jogador<br> usando a Id dele
 PUT|/jogadores/{id}| Fará uma atualização de<br>um jogador<br> usando a Id dele| Integer id
     
 # Autores
-- Alvaro Somensi Magnenti
-- Felipe Rafael dos Santos Barbosa
-- Victor Cassio Viana da Luz
-- Vitor Henrique Moreira de Souza
+Participantes | E-mail
+--------------|-------
+Alvaro Somensi Magnenti | alvarosomensi@hotmail.com
+Felipe Rafael dos Santos Barbosa | rafaelt.ibarbosa@gmail.com
+Victor Cassio Viana da Luz | victorcassiolol@gmail.com
+Vitor Henrique Moreira de Souza | vhsouzaeng@gmail.com
