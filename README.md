@@ -59,7 +59,7 @@ PUT|/jogadores/{id}| Fará uma atualização de<br>um jogador<br> usando a Id de
 # Autores
 Participantes | E-mail
 --------------|-------
-Alvaro Somensi Magnenti | alvarosomensi@hotmail.com
+Alvaro Somensi Magnenti | alvarosomensi@gmail.com
 Felipe Rafael dos Santos Barbosa | rafaelt.ibarbosa@gmail.com
 Victor Cassio Viana da Luz | victorcassiolol@gmail.com
 Vitor Henrique Moreira de Souza | vhsouzaeng@gmail.com
