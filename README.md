@@ -61,5 +61,5 @@ Participantes | E-mail
 --------------|-------
 Alvaro Somensi Magnenti | alvarosomensi@gmail.com
 Felipe Rafael dos Santos Barbosa | rafaelt.ibarbosa@gmail.com
-Victor Cassio Viana da Luz | victorcassiolol@gmail.com
+Victor Cassio Viana da Luz | victorcassiov@gmail.com
 Vitor Henrique Moreira de Souza | vhsouzaeng@gmail.com
