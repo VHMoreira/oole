@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/intro.dart';
 
-void main() {
-  runApp(new Login());
-}
+void main() => runApp(MyApp());
 
-
-class Login extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: 
+    return MaterialApp (
+      title: 'Oolé app',
+      theme: ThemeData(
+        primarySwatch: Colors.green
+      ),
+      home: IntroWidget(),
     );
-  }
-
+  } 
 }
