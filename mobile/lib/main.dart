@@ -11,7 +11,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green
       ),
-      home: IntroWidget(),
+      home: IntroWidget(
+      ),
     );
   } 
 }
