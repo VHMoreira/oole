@@ -57,7 +57,7 @@ POST|/jogadores| Fará uma inserção de<br>um novo jogador<br> usando a Id dele
 PUT|/jogadores/{id}| Fará uma atualização de<br>um jogador<br> usando a Id dele| Integer id
 
 ## Modelagem do Banco de Dados
-![Diagrama de Entidade e Relacionamento do Banco de Dados](https://github.com/VHMoreira/oole/blob/master/img/diagrams/oole_er.png)
+![Diagrama de Entidade e Relacionamento do Banco de Dados](https://github.com/VHMoreira/oole/blob/master/img/diagrams/oole-er.png)
 
   Para o sistema de gerenciamento de banco de dados, a escolha foi o **MySQL**, devido o fato de ser open source e também devido a familiaridade da equipe com ele.
 
