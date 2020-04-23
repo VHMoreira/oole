@@ -1,19 +1,20 @@
 package br.com.oole.dto;
 
 import javax.validation.constraints.Email;
+
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.oole.services.validation.InsertJogador;
+import br.com.oole.services.validation.InsertOlheiro;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@InsertJogador
+@InsertOlheiro
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
-public class NewJogadorDTO {
+public class NewOlheiroDTO {
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
 	@Length(min = 2, max=50, message = "Deve ter no minimo dois caracteres")
@@ -34,14 +35,10 @@ public class NewJogadorDTO {
 	private String sexo;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
-	private String posicao;
-	private String problemaSaude;
+	private String nacionalidade;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cep;
-	
-	@NotEmpty(message = "Preenchimento obrigatório")
-	private String nacionalidade;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String endereco;
@@ -61,6 +58,4 @@ public class NewJogadorDTO {
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String estado;
-	
-	
 }

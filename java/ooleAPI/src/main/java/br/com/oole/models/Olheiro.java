@@ -2,232 +2,130 @@ package br.com.oole.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-
-import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.oole.dto.JogadorDTO;
+import br.com.oole.dto.OlheiroDTO;
 import br.com.oole.models.enums.Perfil;
-
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter @Setter @NoArgsConstructor @EqualsAndHashCode(exclude = {"jogadores","olheirosSeguidores"})
 public class Olheiro implements Serializable{
-
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private Date dataNascimento;
+	private String dataNascimento;
+	
+	@JsonIgnore
 	private String cpf;
 	private String sexo;
-	private String login;
-	private String senha;
 	
-	@OneToOne(mappedBy = "olheiro")
-	private Endereco endereco;
+	private String login;
+	
+	@JsonIgnore
+	private String senha;
 	
 	@Column(unique=true)
 	private String email;
 	
-	@ElementCollection
-	@CollectionTable(name="TELEFONE")
-	private Set<String> telefones = new HashSet<>();
-	
-	@ManyToMany
-	private List<Jogador> jogadores = new ArrayList<Jogador>();
+	private String telefone;
 	
 	private Perfil perfil;
 	
+	private String nacionalidade;
 	
-	public Olheiro() {
-		super();
-		this.perfil = Perfil.OLHEIRO;
-	}
-
+	private String cep;
 	
-
-	public Olheiro(Integer id, String nome, Date dataNascimento, String cpf, String sexo, String login,
-			String senha, Endereco endereco, String email) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.dataNascimento = dataNascimento;
-		this.cpf = cpf;
-		this.sexo = sexo;
-		this.login = login;
-		this.senha = senha;
-		this.endereco = endereco;
-		this.email = email;
-		this.perfil = Perfil.OLHEIRO;
-	}
-
-
-
-	public Integer getId() {
-		return id;
-	}
-
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-
-	public String getNome() {
-		return nome;
-	}
-
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-
-	public Date getDataNascimento() {
-		return dataNascimento;
-	}
-
-
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
-
-
-	public String getCpf() {
-		return cpf;
-	}
-
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-
-	public String getSexo() {
-		return sexo;
-	}
-
-
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
-	}
+	private String bairro;
 	
-
-	public Endereco getEnderecos() {
-		return endereco;
-	}
-
-
-	public void setEndereco(Endereco enderecos) {
-		this.endereco = enderecos;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+	private String cidade;
 	
+	private String estado;
+	
+	private String endereco;
+	
+	@ManyToMany(mappedBy = "olheiros")
 	@JsonIgnore
-	public List<Jogador> getJogadores() {
-		return jogadores;
-	}
-
-	public void setJogadores(List<Jogador> jogadores) {
-		this.jogadores = jogadores;
-	}
+	private Set<Jogador> jogadores = new HashSet<Jogador>();
 	
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(name = "OLHEIRO_SEGUIDORES",
+	joinColumns = @JoinColumn(name = "olheiro_id"),
+    inverseJoinColumns = @JoinColumn(name = "seguidor_id"))
+	private Set<Olheiro> olheirosSeguidores = new HashSet<Olheiro>();
 
-	public String getEmail() {
-		return email;
-	}
-
-
-
-	public void setEmail(String email) {
+	public Olheiro(Integer id, String nome, String dataNascimento, String cpf, String sexo, String login, String senha,
+			String email, String telefone, String nacionalidade, String cep, String bairro, String cidade,
+			String estado, String endereco) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.dataNascimento = dataNascimento;
+		this.cpf = cpf;
+		this.sexo = sexo;
+		this.login = login;
+		this.senha = senha;
 		this.email = email;
-	}
-
-
-
-	public Set<String> getTelefones() {
-		return telefones;
-	}
-
-
-
-	public void setTelefones(Set<String> telefones) {
-		this.telefones = telefones;
+		this.telefone = telefone;
+		this.nacionalidade = nacionalidade;
+		this.cep = cep;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.endereco = endereco;
+		this.perfil = Perfil.OLHEIRO;
 	}
 	
-
-	public Perfil getPerfil() {
-		return perfil;
+	public void observar(Jogador j) {
+		this.jogadores.add(j);
+		j.getOlheiros().add(this);
 	}
-
-
-
-	public void setPerfil(Perfil perfil) {
-		this.perfil = perfil;
+	
+	public void seguir(Olheiro o) {
+		o.getOlheirosSeguidores().add(this);
 	}
-
-
-
-	// hashcode e equals criado baseado SOMENTE no id
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+	
+	public List<JogadorDTO> getObservados(){
+		List<JogadorDTO> list = new ArrayList<JogadorDTO>();
+		for (Jogador jogador : this.jogadores) {
+			list.add(Jogador.toDTO(jogador));
+		}
+		return list;
 	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Olheiro other = (Olheiro) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+	
+	public List<OlheiroDTO> getSeguidores(){
+		List<OlheiroDTO> list = new ArrayList<OlheiroDTO>();
+		for (Olheiro olheiro : this.olheirosSeguidores) {
+			list.add(Olheiro.toDTO(olheiro));
+		}
+		return list;
 	}
 	
 	
-	
+	public static OlheiroDTO toDTO(Olheiro ol) {
+		return new OlheiroDTO(ol.getId(),ol.getNome(),ol.getDataNascimento(),ol.getSexo(),ol.getLogin(),ol.getEmail(),ol.getTelefone(), ol.getNacionalidade(),ol.getCep(),ol.getBairro(),ol.getCidade(),ol.getEndereco(),ol.getEstado());
+	}
+
 }

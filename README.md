@@ -36,7 +36,7 @@ As funcionalidades que cada perfil do sistema deve ter.
 - Compartilhar vídeos dos seus lances
 - Realizar atualizações cadastrais
 - Feed com com atividades recentes dos jogadores que segue
-# Arquitetura
+# Arquitetura da API
 ![Diagrama da Arquitetura da Aplicação](https://github.com/VHMoreira/oole/blob/master/img/diagrams/arch_oole.png)
 Os clientes, ao fazerem uma requisição interagirão, primeiramente, com a camada Rest que a partir de um objeto Model, encapsulará os dados e os enviará para as camadas Service. Na camada Service os models sofrerão alterações, validações e conversões, de acordo com a regra de negócios da aplicação para depois passar os dados para a Camada de DAO, que fará a interação com o Banco de Dados. 
 
@@ -55,6 +55,18 @@ GET|/jogadores/page| Fará uma busca por<br>todos os jogadores<br> de forma pagi
 GET|/jogadores/{id}| Fará uma busca por<br>um jogador usando <br> a Id dele| Integer id
 POST|/jogadores| Fará uma inserção de<br>um novo jogador<br> usando a Id dele| None
 PUT|/jogadores/{id}| Fará uma atualização de<br>um jogador<br> usando a Id dele| Integer id
+
+## Modelagem do Banco de Dados
+![Diagrama de Entidade e Relacionamento do Banco de Dados](https://github.com/VHMoreira/oole/blob/master/img/diagrams/oole_er.png)
+
+  Para o sistema de gerenciamento de banco de dados, a escolha foi o **MySQL**, devido o fato de ser open source e também devido a familiaridade da equipe com ele.
+
+- **Jogador**: É a tabela responsável por guardar os dados dos usuários que tem o perfil JOGADOR.
+- **Olheiro**: É a tabela responsável por guardar os dados dos usuários que tem o perfil OLHEIRO. 
+- **Video**: É a tabela responsável por guardar os dados dos videos inseridos pelo usuário JOGADOR, o relacionamento dela com a tabela jogador vai ser de **muitos para um**.
+- **Jogador_Seguidor**: É a tabela responsável por guardar os dados relativos aos seguidores de cada jogador. Tendo em vista que um jogador só pode seguir outros jogadores, ela é gerada devido uma espécie de autoreferência de **muitos para muitos** da tabela Jogador com ela mesma.
+- **Olheiro_Seguidor**: É a tabela responsável por guardar os dados relativos aos seguidores de cada olheiro. Tendo em vista que um jogador só pode seguir outros olheiro, ela é gerada devido uma espécie de autoreferência de **muitos para muitos** da tabela Olheiro com ela mesma.
+- **Observacos**: É a tabela responsável por guardar os dados relativos à aos jogadores que cada olheiro está observando. Ela é gerada devido ao relacionamento de **muitos para muitos** entre as tabelas Jogador e Olheiro.
     
 # Autores
 Participantes | E-mail
