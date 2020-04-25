@@ -8,8 +8,17 @@ class IntroWidget extends StatefulWidget {
 class _IntroWidgetState extends State<IntroWidget> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      
+    return Column (
+      children: <Widget>[
+        Expanded (
+          child: FittedBox (
+            fit: BoxFit.contain,
+            child: const Image(
+              image: AssetImage('/images/inicio-app.png'),
+              )
+          ),  
+        ),
+      ]
     );
   }
 }

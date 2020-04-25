@@ -9,10 +9,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp (
       title: 'Oolé app',
       theme: ThemeData(
-        primarySwatch: Colors.green
+        primaryColor: Color(0xFF008140),
       ),
-      home: IntroWidget(
-      ),
+      home: IntroWidget(),
     );
   } 
 }
