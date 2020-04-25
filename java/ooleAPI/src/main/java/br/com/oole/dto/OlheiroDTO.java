@@ -5,27 +5,28 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter @AllArgsConstructor
-public class JogadorDTO {
+public class OlheiroDTO {
 	private Integer id;
 	private String nome;
 	private String dataNascimento;
-
+	
 	private String sexo;
-	private String posicao;
-	private String problemaSaude;
 	
 	private String login;
+	
 	private String email;
 	
 	private String telefone;
-
+	
 	private String nacionalidade;
 	
-	private String endereco;
+	private String cep;
 	
 	private String bairro;
 	
 	private String cidade;
+	
+	private String endereco;
 	
 	private String estado;
 }

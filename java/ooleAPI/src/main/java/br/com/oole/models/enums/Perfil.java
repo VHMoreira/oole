@@ -2,8 +2,8 @@ package br.com.oole.models.enums;
 
 public enum Perfil {
 
-	JOGADOR(1, "JOGADOR"),
-	OLHEIRO(2, "OLHEIRO");
+	JOGADOR(1, "ROLE_JOGADOR"),
+	OLHEIRO(2, "ROLE_OLHEIRO");
 
 	private int cod;
 	private String descricao;

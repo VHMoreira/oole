@@ -8,30 +8,30 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.oole.dao.JogadorDAO;
-import br.com.oole.dto.NewJogadorDTO;
-import br.com.oole.models.Jogador;
+import br.com.oole.dao.OlheiroDAO;
+import br.com.oole.dto.NewOlheiroDTO;
+import br.com.oole.models.Olheiro;
 import br.com.oole.resources.exceptions.FieldMessage;
 import br.com.oole.services.validation.utils.BR;
 
-public class InsertJogadorValidator implements ConstraintValidator<InsertJogador, NewJogadorDTO> {
+public class InsertOlheiroValidator implements ConstraintValidator<InsertOlheiro, NewOlheiroDTO> {
 
 	@Autowired
-	private JogadorDAO dao;
+	private OlheiroDAO dao;
 
 	@Override
-	public boolean isValid(NewJogadorDTO value, ConstraintValidatorContext context) {
+	public boolean isValid(NewOlheiroDTO value, ConstraintValidatorContext context) {
 		List<FieldMessage> list = new ArrayList<>();
 		if (!BR.isValidCPF(value.getCpf())) {
 			list.add(new FieldMessage("cpf", "CPF inválido"));
 		}
 
-		Jogador aux = dao.findByEmail(value.getEmail());
+		Olheiro aux = dao.findByEmail(value.getEmail());
 		if (aux != null) {
 			list.add(new FieldMessage("email", "Email já existente"));
 		}
 		
-		Jogador aux1 = dao.findByLogin(value.getLogin());
+		Olheiro aux1 = dao.findByLogin(value.getLogin());
 		if (aux1 != null) {
 			list.add(new FieldMessage("login", "Login já existente"));
 		}
