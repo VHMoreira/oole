@@ -1,24 +1,37 @@
 import 'package:flutter/material.dart';
 
-class IntroWidget extends StatefulWidget {
+class Intro extends StatefulWidget {
   @override
-  _IntroWidgetState createState() => _IntroWidgetState();
+  _IntroState createState() => _IntroState();
 }
 
-class _IntroWidgetState extends State<IntroWidget> {
+class _IntroState extends State<Intro> {
   @override
   Widget build(BuildContext context) {
-    return Column (
-      children: <Widget>[
-        Expanded (
-          child: FittedBox (
-            fit: BoxFit.contain,
-            child: const Image(
-              image: AssetImage('/images/inicio-app.png'),
-              )
-          ),  
-        ),
-      ]
+    return Scaffold (
+      appBar: AppBar(
+        title: Text("Oolé app"),
+      ),
+
+      backgroundColor: Colors.green,
+
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        //mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container (
+            child: Image.asset(
+              "images/inicio-app.png",
+              alignment: Alignment.center,
+              fit: BoxFit.fill,
+              height: 150.0,
+            ), 
+          ),
+
+          Text("Ainda não possui uma conta cadastre-se é de graça!")
+
+        ],
+      ),
     );
   }
 }
