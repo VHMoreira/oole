@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/login.dart';
 
 class Intro extends StatefulWidget {
   @override
@@ -44,7 +45,12 @@ class _IntroState extends State<Intro> {
                         color: Color(0xFF01E271),
                         fontSize: 16.0,
                       )),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Login())
+                    );
+                  },
                 ),
               ),
             ),
