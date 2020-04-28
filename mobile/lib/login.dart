@@ -9,8 +9,22 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      
+    return Scaffold (
+      backgroundColor: Color(0xFF008140),
+      body: SingleChildScrollView(
+        child: Center (
+          child: Column(
+            children: <Widget>[
+              Image.asset(
+                "images/oole-logo.png",
+                fit: BoxFit.fitWidth,
+                width: 200,
+                height: 200,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
