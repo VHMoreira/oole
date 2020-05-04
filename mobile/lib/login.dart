@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/home.dart';
+import 'package:mobile/register.dart';
 
 
 class Login extends StatefulWidget {
@@ -17,12 +19,12 @@ class _LoginState extends State<Login> {
             
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 60, bottom: 10),
+                padding: EdgeInsets.only(top: 60),
                 child: Image.asset(
                   "images/oole-logo.png",
                   fit: BoxFit.fitWidth,
-                  width: 200,
-                  height: 200,
+                  width: 180,
+                  height: 180,
                 ),
               ),
               
@@ -47,7 +49,9 @@ class _LoginState extends State<Login> {
                 padding: EdgeInsets.only(left: 30.0, right: 30.0, bottom: 40.0),
                 child: Container(
                   child: TextFormField(
-                    keyboardType: TextInputType.visiblePassword,
+                    autofocus: true,
+                    obscureText: true,
+                    keyboardType: TextInputType.text,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24.0
@@ -65,28 +69,41 @@ class _LoginState extends State<Login> {
               Padding (padding: EdgeInsets.only(bottom: 20),
                 child: Container(
                   height: 50.0,
-                  width: 350.0,
+                  width: 300.0,
                   child: RaisedButton (
                     child: Text('Entrar', style: TextStyle(
                       fontSize: 24.0,
                       color: Color(0xFF01E271)
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => 
+                        Home()),
+                      );
+                    },
                   ),
                 ),
               ),
-
-              Container(
-                height: 50.0,
-                width: 350.0,
-                child: RaisedButton (
-                  child: Text('Cadastrar', style: TextStyle(
-                    fontSize: 24.0,
-                    color: Color(0xFF01E271)
+            Text('Ainda não tem um Oolé?\n'
+            'Inscreva-se, é de graça.', style: TextStyle(color: Colors.white, fontSize: 16.0),),
+              Padding(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Container(
+                  height: 50.0,
+                  width: 300.0,
+                  child: RaisedButton (
+                    child: Text('Cadastrar', style: TextStyle(
+                      fontSize: 24.0,
+                      color: Color(0xFF01E271)
+                      ),
                     ),
+                    onPressed: () {
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Register()
+                      )); 
+                    },
                   ),
-                  onPressed: () {},
                 ),
               ),
             ],
