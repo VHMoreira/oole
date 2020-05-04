@@ -36,7 +36,8 @@ class _IntroState extends State<Intro> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    left: 20.0, top: 80.0, bottom: 30.0, right: 20.0),
+                    left: 20.0, top: 50.0, 
+                    bottom: 30.0, right: 20.0),
                 child: Container(
                   height: 50.0,
                   width: 600.0,
@@ -44,7 +45,7 @@ class _IntroState extends State<Intro> {
                     child: Text("Começar a usar!",
                         style: TextStyle(
                           color: Color(0xFF01E271),
-                          fontSize: 16.0,
+                          fontSize: 24.0,
                         )),
                     onPressed: () {
                       Navigator.push(
@@ -63,7 +64,7 @@ class _IntroState extends State<Intro> {
                   child: RaisedButton(
                     child: Text(
                       "O que é?",
-                      style: TextStyle(color: Color(0xFF01E271), fontSize: 16.0),
+                      style: TextStyle(color: Color(0xFF01E271), fontSize: 24.0),
                     ),
                     onPressed: () {},
                   ),
