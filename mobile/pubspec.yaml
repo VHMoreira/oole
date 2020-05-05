@@ -43,6 +43,7 @@ flutter:
   assets:
     - images/inicio-app.png
     - images/oole-logo.png
+    - icon/alarme.png
 
 
   # To add assets to your application, add an assets section, like this:
