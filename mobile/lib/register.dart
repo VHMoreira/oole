@@ -14,14 +14,14 @@ class _RegisterState extends State<Register> {
 
   final _sexos = ['Masculino', 'Feminino'];
 
-  final _tipos = [
-    [1,'Jogador'],
-    [2,'Olheiro']
+  final List _tipos = [
+    {'id':1,'desc':'Jogador'},
+    {'id':2,'desc':'Olheiro'},
   ];
 
   var _sexo = 'Selecione o sexo';
   var _posicao = 'Selecione a posição';
-  var _tipo = 'Selecione o tipo';
+  var _tipo = {'id':0,'desc':'Selecione o tipo'};
 
   Widget _form(String tipo) {
     if (tipo=='1'){
@@ -287,77 +287,87 @@ class _RegisterState extends State<Register> {
 
 
 
-            Padding(
-              padding: EdgeInsets.only(left: 30.0, right: 30.0,  bottom: 20.0),
-              child: Row(
-                children: <Widget>[
-                  DropdownButton(
-                      items: _tipos.map((tipo) => DropdownMenuItem(value: tipo[0],child: Text(tipo[1]))).toList(),
-                      onChanged: (tipo){
-                        setState(() {
-                          _tipo = tipo;
-                        });
-                      },
+            // Padding(
+            //   padding: EdgeInsets.only(left: 30.0, right: 30.0,  bottom: 20.0),
+            //   child: Row(
+            //     children: <Widget>[
+            //       DropdownButton(
+            //           items: () {
+            //             var list = [];
+            //             for (var tipo in _tipos) {
+            //               list.add(DropdownMenuItem(value: tipo['id'],child: Text(tipo['desc'])));
+            //             }
+            //             return list;
+            //           },
+            //           onChanged: (tipo){
+            //             setState(() {
+            //               _tipo = tipo;
+            //             });
+            //           },
                       
-                      hint: Text(
-                        _tipo[1],
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 19.0,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ), 
+            //           hint: Text(
+            //             _tipo[1],
+            //             style: TextStyle(
+            //               color: Colors.white,
+            //               fontSize: 19.0,
+            //             ),
+            //           ),
+            //         ),
+            //     ],
+            //   ),
+            // ), 
 
 
 
-            // _form(_tipo),
+            // // _form(_tipo),
 
 
-            Padding(
-              padding: EdgeInsets.only(left: 30.0, right: 30.0,  bottom: 20.0),
-              child: Container (
-                child: TextFormField(
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 19.0
-                  ),
-                  decoration: const InputDecoration(
-                    labelText: 'CEP: ',
-                    labelStyle: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter> [
-                    WhitelistingTextInputFormatter.digitsOnly,
-                  ],
-                ),
-              ), 
-            ),
+            // _tipo['id'] == 1? 
+            // Padding(
+            //   padding: EdgeInsets.only(left: 30.0, right: 30.0,  bottom: 20.0),
+            //   child: Container (
+            //     child: TextFormField(
+            //       style: TextStyle(
+            //         color: Colors.white,
+            //         fontSize: 19.0
+            //       ),
+            //       decoration: const InputDecoration(
+            //         labelText: 'CEP: ',
+            //         labelStyle: TextStyle(
+            //           color: Colors.white,
+            //         ),
+            //       ),
+            //       keyboardType: TextInputType.number,
+            //       inputFormatters: <TextInputFormatter> [
+            //         WhitelistingTextInputFormatter.digitsOnly,
+            //       ],
+            //     ),
+            //   ), 
+            // )
+            // :
+            // null
+            // ,
 
 
 
 
-            Padding(
-              padding: EdgeInsets.only(left: 30.0, right: 30.0,  bottom: 20.0),
-              child: Container (
-                child: TextFormField(
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 19.0
-                  ),
-                  decoration: const InputDecoration(
-                    labelText: 'Nacionalidade: ',
-                    labelStyle: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ), 
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(left: 30.0, right: 30.0,  bottom: 20.0),
+            //   child: Container (
+            //     child: TextFormField(
+            //       style: TextStyle(
+            //         color: Colors.white,
+            //         fontSize: 19.0
+            //       ),
+            //       decoration: const InputDecoration(
+            //         labelText: 'Nacionalidade: ',
+            //         labelStyle: TextStyle(
+            //           color: Colors.white,
+            //         ),
+            //       ),
+            //     ),
+            //   ), 
+            // ),
 
 
 

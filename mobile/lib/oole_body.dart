@@ -8,7 +8,7 @@ class OoleBody extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Flexible(child: OoleList()),
+        Flexible(child: Center(child: Text("HOME"))),
       ],
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/components/bottom_bar.dart';
 import 'package:mobile/oole_body.dart';
+import 'package:mobile/screens/search_jogador.dart';
 
 class Home extends StatelessWidget {
   final topBar = new AppBar(
@@ -22,23 +24,31 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: topBar,
-      body: OoleBody(),
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        height: 50.0,
-        child: BottomAppBar(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(icon: Icon(Icons.home), onPressed: null, iconSize: 30.0),
-              IconButton(icon: Icon(Icons.add_a_photo), onPressed: null, iconSize: 30.0),
-              IconButton(icon: Icon(Icons.accessibility), onPressed: null, iconSize: 30.0),
-              IconButton(icon: Icon(Icons.adjust), onPressed: null, iconSize: 30.0)
-            ],
+      appBar: AppBar(
+        backgroundColor: Color(0xFF008140),
+        elevation: 1.0,
+        title: Text('Home'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search), 
+            onPressed: () {
+              Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SearchJogador()
+              )); 
+            }
           ),
-        ),
+          IconButton(
+            icon: Icon(Icons.notifications), 
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.more_vert), 
+            onPressed: () {},
+          ),
+        ],
       ),
+      body: OoleBody(),
+      bottomNavigationBar: BottomBar()
     );
   }
 }
