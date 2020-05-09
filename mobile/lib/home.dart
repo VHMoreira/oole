@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/oole_body.dart';
 
 class Home extends StatelessWidget {
   final topBar = new AppBar(
@@ -23,7 +22,16 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: topBar,
-      body: OoleBody(),
+      body: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Olá Mundo'),
+            ],
+          ),
+        ],
+      ),
       bottomNavigationBar: Container(
         color: Colors.white,
         height: 50.0,
@@ -31,10 +39,10 @@ class Home extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              IconButton(icon: Icon(Icons.home), onPressed: null, iconSize: 30.0),
-              IconButton(icon: Icon(Icons.add_a_photo), onPressed: null, iconSize: 30.0),
-              IconButton(icon: Icon(Icons.accessibility), onPressed: null, iconSize: 30.0),
-              IconButton(icon: Icon(Icons.adjust), onPressed: null, iconSize: 30.0)
+              IconButton(icon: Icon(Icons.home), onPressed: (){}, iconSize: 30.0),
+              IconButton(icon: Icon(Icons.add_a_photo), onPressed: (){}, iconSize: 30.0),
+              IconButton(icon: Icon(Icons.accessibility), onPressed: (){}, iconSize: 30.0),
+              IconButton(icon: Icon(Icons.adjust), onPressed: (){}, iconSize: 30.0)
             ],
           ),
         ),
