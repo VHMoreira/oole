@@ -31,12 +31,10 @@ class _SearchJogadorState extends State<SearchJogador> {
     final response = await http.get('https://oole.herokuapp.com/olheiros/search?login=$_login');
 
     if (response.statusCode == 200) {
+      Map<String, dynamic> reqBody = jsonDecode(response.body);
       setState(() {
-        Map<String, dynamic> reqBody = jsonDecode(response.body);
-        setState(() {
-          _lista = reqBody['content'];
-          _procurando = true;
-        });
+        _lista = reqBody['content'];
+        _procurando = true;
       });
     } else {
       print('Failed to load Jogador');

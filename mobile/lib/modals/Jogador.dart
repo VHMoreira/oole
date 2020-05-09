@@ -57,5 +57,27 @@ class Jogador {
     );
   }
 
+  factory Jogador.toJson(Jogador jogador){
+    return {
+      'id': jogador.id,
+      'nome': jogador.nome,
+      'dataNascimento': jogador.dataNascimento,
+      'urlFotoPerfil': jogador.urlFotoPerfil,
+      'cpf': jogador.cpf,
+      'sexo': jogador.sexo,
+      'posicao': jogador.posicao,
+      'problemaSaude': jogador.problemaSaude,
+      'login': jogador.login,
+      'email': jogador.email,
+      'telefone': jogador.telefone,
+      'nacionalidade': jogador.nacionalidade,
+      'cep': jogador.cep,
+      'bairro': jogador.bairro,
+      'cidade': jogador.cidade,
+      'estado': jogador.estado,
+      'endereco': jogador.endereco
+    };
+  }
+
 
 }
