@@ -2,15 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mobile/modals/NewJogador.dart';
+import 'package:mobile/modals/NewUsuario.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile/utils/urls.dart';
 
 class Register extends StatefulWidget {
-  @override
-  _RegisterState createState() => _RegisterState();
-}
-
-class _RegisterState extends State<Register> {
   final _posicoes = ['Centroavante','Atacante','Ponta Direita','Ponta Esquerda',
                     'Meia-Atacantes','Meia Direita','Meia Esquerda', 'Meia Central', 'Volante', 
                     'Lateral Direito','Lateral Esquerdo','Zagueiro Direito','Zagueiro Esquerdo','Zagueiro Central',
@@ -21,15 +17,21 @@ class _RegisterState extends State<Register> {
     'Olheiro',
   ];
 
+  @override
+  _RegisterState createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+
   var _sexo = 'Selecione o sexo*';
   var _posicao = 'Selecione a posição*';
   var _tipo = [0,'Selecione o tipo*'];
 
-  final NewJogador jogador = NewJogador();
+  final NewUsuario usuario = NewUsuario();
 
-  Future<http.Response> cadastrarJogador(NewJogador jogador) async {
+  Future<http.Response> cadastrarJogador(NewUsuario jogador) async {
     final response = await http.post(
-      'https://oole.herokuapp.com/jogadores',
+      URLS.BASE_JOGADOR,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -56,39 +58,41 @@ class _RegisterState extends State<Register> {
 
     if (response.statusCode == 200) {
       print("Cadastro concluido com sucesso");
+      Navigator.pop(context);
     } else {
       print(response.body);
       print(jogador.sexo);
     }
   }
 
-  Future<http.Response> cadastrarOlheiro(NewJogador jogador) async {
+  Future<http.Response> cadastrarOlheiro(NewUsuario olheiro) async {
     final response = await http.post(
-      'https://oole.herokuapp.com/olheiros',
+      URLS.BASE_OLHEIRO,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body:jsonEncode(<String, String>{
-        'nome': jogador.nome,
-        'dataNascimento': jogador.dataNascimento,
-        'urlFotoPerfil': jogador.urlFotoPerfil,
-        'cpf': jogador.cpf,
+        'nome': olheiro.nome,
+        'dataNascimento': olheiro.dataNascimento,
+        'urlFotoPerfil': olheiro.urlFotoPerfil,
+        'cpf': olheiro.cpf,
         'sexo': "Masculino",
-        'login': jogador.login,
-        'email': jogador.email,
-        'telefone': jogador.telefone,
-        'nacionalidade': jogador.nacionalidade,
-        'cep': jogador.cep,
-        'bairro': jogador.bairro,
-        'cidade': jogador.cidade,
-        'estado': jogador.estado,
-        'endereco': jogador.endereco,
-        'senha': jogador.senha,
+        'login': olheiro.login,
+        'email': olheiro.email,
+        'telefone': olheiro.telefone,
+        'nacionalidade': olheiro.nacionalidade,
+        'cep': olheiro.cep,
+        'bairro': olheiro.bairro,
+        'cidade': olheiro.cidade,
+        'estado': olheiro.estado,
+        'endereco': olheiro.endereco,
+        'senha': olheiro.senha,
       })
     );
 
     if (response.statusCode == 200) {
       print("Cadastro concluido com sucesso");
+      Navigator.pop(context);
     } else {
       print(response.body);
     }
@@ -109,11 +113,11 @@ class _RegisterState extends State<Register> {
         margin: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height/100) * 2),
         child: DropdownButton(
 
-          items: _posicoes.map((String posicao) => DropdownMenuItem(value: posicao,child: Text(posicao))).toList(),
+          items: widget._posicoes.map((String posicao) => DropdownMenuItem(value: posicao,child: Text(posicao))).toList(),
           onChanged: (String posicao) {
             setState(() {
               _posicao = posicao;
-              jogador.posicao = posicao;
+              usuario.posicao = posicao;
             });
           },
           hint: Text(
@@ -146,7 +150,7 @@ class _RegisterState extends State<Register> {
         child: TextFormField(
           onChanged: (String value) {
             setState(() {
-              jogador.problemaSaude = value;
+              usuario.problemaSaude = value;
             });
           },
           maxLines: 2,
@@ -206,7 +210,7 @@ class _RegisterState extends State<Register> {
                 child: TextFormField(
                   onChanged: (String value) {
                     setState(() {
-                      jogador.login = value;
+                      usuario.login = value;
                     });
                   },
                   style: TextStyle(
@@ -239,7 +243,7 @@ class _RegisterState extends State<Register> {
                   
                   onChanged: (String value) {
                     setState(() {
-                      jogador.senha = value;
+                      usuario.senha = value;
                     });
                   },
                   style: TextStyle(
@@ -270,7 +274,7 @@ class _RegisterState extends State<Register> {
                 child: TextFormField(
                   onChanged: (String value) {
                     setState(() {
-                      jogador.nome = value;
+                      usuario.nome = value;
                     });
                   },
                   style: TextStyle(
@@ -305,7 +309,7 @@ class _RegisterState extends State<Register> {
                   ],
                   onChanged: (String value) {
                     setState(() {
-                      jogador.dataNascimento = value;
+                      usuario.dataNascimento = value;
                     });
                   },
                   //^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$,
@@ -341,7 +345,7 @@ class _RegisterState extends State<Register> {
                   ],
                   onChanged: (String value) {
                     setState(() {
-                      jogador.cpf = value;
+                      usuario.cpf = value;
                     });
                   },
                   style: TextStyle(
@@ -370,11 +374,11 @@ class _RegisterState extends State<Register> {
                 margin: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height/100) * 2),
                 child: DropdownButton(
                   
-                  items: _sexos.map((String sexo) => DropdownMenuItem(value: sexo,child: Text(sexo))).toList(),
+                  items: widget._sexos.map((String sexo) => DropdownMenuItem(value: sexo,child: Text(sexo))).toList(),
                   onChanged: (String sexo) {
                     setState(() {
                       _sexo = sexo;
-                      jogador.sexo = sexo;
+                      usuario.sexo = sexo;
                     });
                     print(_sexo);
                   },
@@ -400,7 +404,7 @@ class _RegisterState extends State<Register> {
                 margin: EdgeInsets.only(bottom: (MediaQuery.of(context).size.height/100) * 2),
                 child: DropdownButton(
                   
-                  items: _tipos.map((String tipo) => DropdownMenuItem(value: tipo,child: Text(tipo))).toList(),
+                  items: widget._tipos.map((String tipo) => DropdownMenuItem(value: tipo,child: Text(tipo))).toList(),
                   onChanged: (String tipo) {
                     setState(() {
                       if(tipo=='Jogador'){
@@ -408,7 +412,7 @@ class _RegisterState extends State<Register> {
                       }else if(tipo=='Olheiro'){
                         _tipo = [2,tipo];
                       }
-                      jogador.tipo = _tipo[0];
+                      usuario.tipo = _tipo[0];
                     });
                   },
                   hint: Text(
@@ -441,7 +445,7 @@ class _RegisterState extends State<Register> {
                 child: TextFormField(
                   onChanged: (String value) {
                     setState(() {
-                      jogador.nacionalidade = value;
+                      usuario.nacionalidade = value;
                     });
                   },
                   style: TextStyle(
@@ -476,7 +480,7 @@ class _RegisterState extends State<Register> {
                   ],
                   onChanged: (String value) {
                     setState(() {
-                      jogador.cep = value;
+                      usuario.cep = value;
                     });
                   },
                   style: TextStyle(
@@ -506,7 +510,7 @@ class _RegisterState extends State<Register> {
                 child: TextFormField(
                   onChanged: (String value) {
                     setState(() {
-                      jogador.endereco = value;
+                      usuario.endereco = value;
                     });
                   },
                   style: TextStyle(
@@ -536,7 +540,7 @@ class _RegisterState extends State<Register> {
                 child: TextFormField(
                   onChanged: (String value) {
                     setState(() {
-                      jogador.bairro = value;
+                      usuario.bairro = value;
                     });
                   },
                   style: TextStyle(
@@ -566,7 +570,7 @@ class _RegisterState extends State<Register> {
                 child: TextFormField(
                   onChanged: (String value) {
                     setState(() {
-                      jogador.cidade = value;
+                      usuario.cidade = value;
                     });
                   },
                   style: TextStyle(
@@ -597,7 +601,7 @@ class _RegisterState extends State<Register> {
                 child: TextFormField(
                   onChanged: (String value) {
                     setState(() {
-                      jogador.estado = value;
+                      usuario.estado = value;
                     });
                   },
                   style: TextStyle(
@@ -627,7 +631,7 @@ class _RegisterState extends State<Register> {
                 child: TextFormField(
                   onChanged: (String value) {
                     setState(() {
-                      jogador.email = value;
+                      usuario.email = value;
                     });
                   },
                   style: TextStyle(
@@ -657,7 +661,7 @@ class _RegisterState extends State<Register> {
                 child: TextFormField(
                   onChanged: (String value) {
                     setState(() {
-                      jogador.telefone = value;
+                      usuario.telefone = value;
                     });
                   },
                   style: TextStyle(
@@ -685,10 +689,10 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   onPressed: () {
-                    if(jogador.tipo == 1){
-                      cadastrarJogador(jogador);
+                    if(usuario.tipo == 1){
+                      cadastrarJogador(usuario);
                     }else{
-                      cadastrarOlheiro(jogador);
+                      cadastrarOlheiro(usuario);
                     }
                   },
                 ),
