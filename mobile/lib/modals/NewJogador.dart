@@ -1,4 +1,4 @@
-class NewUsuario {
+class NewJogador {
 	String nome;
 	String dataNascimento;
 	
@@ -29,7 +29,7 @@ class NewUsuario {
 	
 	String endereco;
 
-  NewUsuario({this.nome, this.dataNascimento, 
+  NewJogador({this.nome, this.dataNascimento, 
            this.urlFotoPerfil, this.cpf, this.sexo, 
            this.posicao, this.problemaSaude, this.login, 
            this.senha, this.email, this.telefone, 

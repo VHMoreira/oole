@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 1ce4b2b... Perfil screen criado
 import 'package:mobile/components/bottom_bar.dart';
 import 'package:mobile/oole_body.dart';
 import 'package:mobile/screens/search_jogador.dart';
@@ -25,6 +28,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
 
       appBar: topBar,
       body: Column(
@@ -54,6 +58,9 @@ class Home extends StatelessWidget {
       ),
     );
 /*       appBar: AppBar(
+=======
+      appBar: AppBar(
+>>>>>>> parent of 1ce4b2b... Perfil screen criado
         backgroundColor: Color(0xFF008140),
         elevation: 1.0,
         title: Text('Home'),
@@ -69,7 +76,10 @@ class Home extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.notifications), 
             onPressed: () {},
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 1ce4b2b... Perfil screen criado
           ),
           IconButton(
             icon: Icon(Icons.more_vert), 
@@ -78,7 +88,12 @@ class Home extends StatelessWidget {
         ],
       ),
       body: OoleBody(),
+<<<<<<< HEAD
       bottomNavigationBar: BottomBar(),
     ); */
+=======
+      bottomNavigationBar: BottomBar()
+    );
+>>>>>>> parent of 1ce4b2b... Perfil screen criado
   }
 }

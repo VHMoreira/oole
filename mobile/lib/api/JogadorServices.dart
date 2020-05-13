@@ -1,19 +1,13 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:mobile/utils/urls.dart';
+// import 'dart:convert';
+// import 'package:http/http.dart' as http;
+// import 'package:mobile/modals/Jogador.dart';
 
-class JogadorServices {
-
-  static Future<List<dynamic>> searchJogador(String login) async {
-    final response = await http.get(URLS.SEARCH_JOGADOR_BY_LOGIN +login);
-
-
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body)['content'];  
-    } else {
-      print('Failed to load Jogador');
-      return null;
-    }
-  }
-
-}
+// Object searchJogador(String login, List lista, bool procurando) async {
+//   final response = await http.get('https://oole.herokuapp.com/olheiros/search?login=$login');
+//   if (response.statusCode == 200) {
+//       Map<String, dynamic> reqBody = jsonDecode(response.body);
+//       return Jogador.fromJson(reqBody)
+//   }else {
+//     print('Failed to load Jogador');
+//   }
+// }

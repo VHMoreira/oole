@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/screens/home.dart';
+import 'package:mobile/home.dart';
 import 'package:mobile/screens/register.dart';
 
 
