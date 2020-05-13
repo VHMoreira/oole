@@ -49,8 +49,11 @@ class Home extends StatelessWidget {
               IconButton(icon: Icon(Icons.accessibility), onPressed: (){}, iconSize: 30.0),
               IconButton(icon: Icon(Icons.adjust), onPressed: (){}, iconSize: 30.0)
             ],
-
-      appBar: AppBar(
+          ),
+        ),
+      ),
+    );
+/*       appBar: AppBar(
         backgroundColor: Color(0xFF008140),
         elevation: 1.0,
         title: Text('Home'),
@@ -75,7 +78,7 @@ class Home extends StatelessWidget {
         ],
       ),
       body: OoleBody(),
-      bottomNavigationBar: BottomBar()
-    );
+      bottomNavigationBar: BottomBar(),
+    ); */
   }
 }

@@ -4,4 +4,4 @@ import 'package:mobile/intro.dart';
 import 'package:mobile/register.dart';
 import 'package:mobile/screens/search_jogador.dart';
 
-void main() => runApp(MaterialApp(home: Home()));
+void main() => runApp(MaterialApp(home: Intro()));

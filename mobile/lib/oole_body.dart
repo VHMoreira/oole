@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'oole_list.dart';
+//import 'oole_list.dart';
 
 class OoleBody extends StatelessWidget {
   @override
