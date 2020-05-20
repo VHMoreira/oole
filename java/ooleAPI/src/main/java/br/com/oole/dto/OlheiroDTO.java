@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter @Setter @AllArgsConstructor
 public class OlheiroDTO {
 	private Integer id;
+	private String urlFotoPerfil;
 	private String nome;
 	private String dataNascimento;
 	

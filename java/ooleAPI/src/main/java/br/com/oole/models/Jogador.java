@@ -75,10 +75,10 @@ public class Jogador implements Serializable{
 	private Set<Olheiro> olheiros = new HashSet<Olheiro>();
 	
 	@ManyToMany
+	@JsonIgnore
 	@JoinTable(name = "JOGADOR_SEGUIDOR",
 			joinColumns = @JoinColumn(name = "jogador_id"),
 			inverseJoinColumns = @JoinColumn(name = "seguidor_id"))
-	@JsonIgnore
 	private Set<Jogador> jogadoresSeguindo = new HashSet<Jogador>();
 	
 	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "jogadoresSeguindo")
@@ -137,20 +137,8 @@ public class Jogador implements Serializable{
 		return list;
 	}
 	
-	public Integer getTotalSeguindo() {
-		return this.jogadoresSeguindo.size();
-	}
-	
-	public Integer getTotalSeguidores() {
-		return this.jogadoresSeguidores.size();
-	}
-	
-	public Integer getTotalObservadores() {
-		return this.olheiros.size();
-	}
-	
 	public static JogadorDTO toDTO(Jogador j) {
-		return new JogadorDTO(j.getId(),j.getNome(),j.getDataNascimento(),j.getSexo(),j.getPosicao(),j.getProblemaSaude(),j.getLogin(),j.getEmail(),j.getTelefone(),j.getNacionalidade(),j.getEndereco(),j.getBairro(),j.getCidade(),j.getEstado());
+		return new JogadorDTO(j.getId(),j.getUrlFotoPerfil(),j.getNome(),j.getDataNascimento(),j.getSexo(),j.getPosicao(),j.getProblemaSaude(),j.getLogin(),j.getEmail(),j.getTelefone(),j.getNacionalidade(),j.getEndereco(),j.getBairro(),j.getCidade(),j.getEstado());
 	}
 	
 }

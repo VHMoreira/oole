@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter @NoArgsConstructor @EqualsAndHashCode(exclude = {"jogadores","olheirosSeguidores"})
+@Getter @Setter @NoArgsConstructor @EqualsAndHashCode(exclude = {"jogadores","olheirosSeguidores","olheirosSeguindo"})
 public class Olheiro implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -65,9 +65,18 @@ public class Olheiro implements Serializable{
 	
 	private String endereco;
 	
+	private String urlFotoPerfil;
+	
 	@ManyToMany(mappedBy = "olheiros")
 	@JsonIgnore
 	private Set<Jogador> jogadores = new HashSet<Jogador>();
+	
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(name = "OLHEIRO_SEGUINDO",
+	joinColumns = @JoinColumn(name = "olheiro_id"),
+    inverseJoinColumns = @JoinColumn(name = "seguido_id"))
+	private Set<Olheiro> olheirosSeguindo = new HashSet<Olheiro>();
 	
 	@ManyToMany
 	@JsonIgnore
@@ -98,15 +107,6 @@ public class Olheiro implements Serializable{
 		this.perfil = Perfil.OLHEIRO;
 	}
 	
-	public void observar(Jogador j) {
-		this.jogadores.add(j);
-		j.getOlheiros().add(this);
-	}
-	
-	public void seguir(Olheiro o) {
-		o.getOlheirosSeguidores().add(this);
-	}
-	
 	public List<JogadorDTO> getObservados(){
 		List<JogadorDTO> list = new ArrayList<JogadorDTO>();
 		for (Jogador jogador : this.jogadores) {
@@ -123,9 +123,17 @@ public class Olheiro implements Serializable{
 		return list;
 	}
 	
+	public List<OlheiroDTO> getSeguindo(){
+		List<OlheiroDTO> list = new ArrayList<OlheiroDTO>();
+		for (Olheiro olheiro : this.olheirosSeguindo) {
+			list.add(Olheiro.toDTO(olheiro));
+		}
+		return list;
+	}
+	
 	
 	public static OlheiroDTO toDTO(Olheiro ol) {
-		return new OlheiroDTO(ol.getId(),ol.getNome(),ol.getDataNascimento(),ol.getSexo(),ol.getLogin(),ol.getEmail(),ol.getTelefone(), ol.getNacionalidade(),ol.getCep(),ol.getBairro(),ol.getCidade(),ol.getEndereco(),ol.getEstado());
+		return new OlheiroDTO(ol.getId(), ol.getUrlFotoPerfil(),ol.getNome(),ol.getDataNascimento(),ol.getSexo(),ol.getLogin(),ol.getEmail(),ol.getTelefone(), ol.getNacionalidade(),ol.getCep(),ol.getBairro(),ol.getCidade(),ol.getEndereco(),ol.getEstado());
 	}
 
 }

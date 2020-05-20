@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.oole.dto.NewOlheiroDTO;
 import br.com.oole.dto.OlheiroDTO;
+import br.com.oole.models.Jogador;
 import br.com.oole.models.Olheiro;
+import br.com.oole.services.JogadorService;
 import br.com.oole.services.OlheiroService;
 
 @RestController
@@ -66,6 +69,17 @@ public class OlheiroResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
+	@RequestMapping(value = "/search",method=RequestMethod.GET)
+	public ResponseEntity<Page<OlheiroDTO>> findPage(
+			@RequestParam(value="login", defaultValue="") String login, 
+			@RequestParam(value="page", defaultValue="0") Integer page, 
+			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
+			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
+			@RequestParam(value="direction", defaultValue="ASC") String direction) {
+		Page<Olheiro> list = olheiroService.search(login, page, linesPerPage, orderBy, direction);
+		Page<OlheiroDTO> listDto = list.map(obj -> Olheiro.toDTO(obj));  
+		return ResponseEntity.ok().body(listDto);
+	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@RequestBody OlheiroDTO obj, @PathVariable Integer id) {
@@ -73,15 +87,34 @@ public class OlheiroResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping("/{seguidorId}/seguir/{seguidoId}")
-	public ResponseEntity<Void> follow(@PathVariable Integer seguidorId, @PathVariable Integer seguidoId) {
+	@PutMapping("/follow")
+	public ResponseEntity<Void> follow(@RequestParam(value="userid") Integer seguidorId, @RequestParam(value="seguidoid") Integer seguidoId) {
 		olheiroService.follow(seguidorId, seguidoId);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping("/{olheiroId}/observar/{jogadorId}")
-	public ResponseEntity<Void> observe(@PathVariable Integer olheiroId, @PathVariable Integer jogadorId) {
-		olheiroService.observe(olheiroId, jogadorId);
+	@PutMapping("/unfollow")
+	public ResponseEntity<Void> unfollow(@RequestParam(value="userid") Integer seguidorId, @RequestParam(value="seguidoid") Integer seguidoId) {
+		olheiroService.unfollow(seguidorId, seguidoId);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PutMapping("/observar")
+	public ResponseEntity<Void> observar(@RequestParam(value="userid") Integer seguidorId, @RequestParam(value="seguidoid") Integer seguidoId) {
+		olheiroService.observe(seguidorId, seguidoId);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping("/desobservar")
+	public ResponseEntity<Void> desobservar(@RequestParam(value="userid") Integer seguidorId, @RequestParam(value="seguidoid") Integer seguidoId) {
+		olheiroService.notObserve(seguidorId, seguidoId);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping(value="/{id}/fotoperfil")
+	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name="file") MultipartFile file, @PathVariable(name ="id") Integer id) {
+		URI uri = olheiroService.uploadProfilePicture(file, id);
+		return ResponseEntity.created(uri).build();
+	}
+
 }

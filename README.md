@@ -43,18 +43,43 @@ Os clientes, ao fazerem uma requisição interagirão, primeiramente, com a cama
 - **Cliente**: É o aplicativo mobile, que fará as requisições à API.
 - **Camada REST**: Ficará responsável por gerênciar as rotas e as requisições da aplicação.
 - **Camada Service**: Ficará responsável pelas regras de negócio da aplicação.
-- **Camada DAO(Data Access Object)**: Ficará responsável pela interação com o Banco de Dados.
+- **Camada DAO (Data Access Object)**: Ficará responsável pela interação com o Banco de Dados.
 - **Models**: São os modelos de dados que serão usados no Banco de Dados.
 
 ## Endpoints da Camada Rest
 
+> URL da API: https://oole.herokuapp.com/
+
+### Jogador
+
 Metodo |Endpoint | Descrição | Parâmetros
 -------|---------|-----------|-----------
-GET|/jogadores| Fará uma busca por<br>todos os jogadores| None
-GET|/jogadores/page| Fará uma busca por<br>todos os jogadores<br> de forma paginada| None
-GET|/jogadores/{id}| Fará uma busca por<br>um jogador usando <br> a Id dele| Integer id
-POST|/jogadores| Fará uma inserção de<br>um novo jogador<br> usando a Id dele| None
-PUT|/jogadores/{id}| Fará uma atualização de<br>um jogador<br> usando a Id dele| Integer id
+GET|/jogadores| Listar todos os jogadores| None | 
+GET|/jogadores/page| Paginação da lista de jogadores| None
+GET|/jogadores/search?login={login}| Busca por login| String login
+GET|/jogadores/{id}| Busca por id| Integer id
+PUT|/jogadores/{id}| Atualizar jogador| Integer id
+PUT|/jogadores/{id}/fotoperfil| Atualizar foto de perfil do jogador| Integer id
+PUT|/jogadores/{id}/videos| Adicionar video| Integer id
+PUT|/jogadores/follow?userid={userid}&seguidoid={seguidoid}| Seguir jogador| Integer userid <br/> Integer seguidoid 
+PUT|/jogadores/unfollow?userid={userid}&seguidoid={seguidoid}| Desseguir jogador| Integer userid <br/> Integer seguidoid 
+POST|/jogadores| Cadastrar novo jogador| None
+
+### Olheiro
+
+Metodo |Endpoint | Descrição | Parâmetros
+-------|---------|-----------|-----------
+GET|/olheiros| Listar todos os olheiros| None | 
+GET|/olheiros/page| Paginação da lista de olheiros| None
+GET|/olheiros/search?login={login}| Busca por login| String login
+GET|/olheiros/{id}| Busca por id| Integer id
+PUT|/olheiros/{id}| Atualizar olheiro| Integer id
+PUT|/olheiros/{id}/fotoperfil| Atualizar foto de perfil do olheiro| Integer id
+PUT|/olheiros/follow?userid={userid}&seguidoid={seguidoid}| Seguir olheiro| Integer userid <br/> Integer seguidoid 
+PUT|/olheiros/unfollow?userid={userid}&seguidoid={seguidoid}| Desseguir olheiro| Integer userid <br/> Integer seguidoid 
+PUT|/olheiros/observar?userid={userid}&seguidoid={seguidoid}| Observar jogador| Integer userid <br/> Integer seguidoid 
+PUT|/olheiros/desobservar?userid={userid}&seguidoid={seguidoid}| Desobservar jogador| Integer userid <br/> Integer seguidoid 
+POST|/olheiros| Cadastrar novo olheiro| None
 
 ## Modelagem do Banco de Dados
 ![Diagrama de Entidade e Relacionamento do Banco de Dados](https://github.com/VHMoreira/oole/blob/master/img/diagrams/oole-er.png)

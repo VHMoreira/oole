@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.oole.dao.JogadorDAO;
+import br.com.oole.DAO.JogadorDAO;
 import br.com.oole.dto.NewJogadorDTO;
 import br.com.oole.models.Jogador;
 import br.com.oole.resources.exceptions.FieldMessage;

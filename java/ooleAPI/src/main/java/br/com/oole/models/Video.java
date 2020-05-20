@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,7 +20,6 @@ import lombok.Setter;
 @Entity
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode
 public class Video implements Serializable{
-	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -33,7 +34,12 @@ public class Video implements Serializable{
 	
 	private Date dataUpload;
 	
+	private int totalLike;
+	
+	private int totaldislike;
+	
 	@ManyToOne
+	@JsonIgnore
 	private Jogador jogador;
 
 }

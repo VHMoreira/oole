@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.oole.dao.OlheiroDAO;
+import br.com.oole.DAO.OlheiroDAO;
 import br.com.oole.dto.NewOlheiroDTO;
 import br.com.oole.models.Olheiro;
 import br.com.oole.resources.exceptions.FieldMessage;

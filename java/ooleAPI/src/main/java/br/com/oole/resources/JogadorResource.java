@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.oole.dto.JogadorDTO;
 import br.com.oole.dto.NewJogadorDTO;
 import br.com.oole.dto.UpdateJogadorDTO;
 import br.com.oole.models.Jogador;
@@ -72,10 +74,22 @@ public class JogadorResource {
 	public ResponseEntity<Page<Jogador>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
-			@RequestParam(value="direction", defaultValue="ASC") String direction) {
+			@RequestParam(value="orderBy", defaultValue="jogadoresSeguidores") String orderBy, 
+			@RequestParam(value="direction", defaultValue="DESC") String direction) {
 		Page<Jogador> list = jogadorService.findPage(page, linesPerPage, orderBy, direction); 
 		return ResponseEntity.ok().body(list);
+	}
+	
+	@RequestMapping(value = "/search",method=RequestMethod.GET)
+	public ResponseEntity<Page<JogadorDTO>> findPage(
+			@RequestParam(value="login", defaultValue="") String login, 
+			@RequestParam(value="page", defaultValue="0") Integer page, 
+			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
+			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
+			@RequestParam(value="direction", defaultValue="ASC") String direction) {
+		Page<Jogador> list = jogadorService.search(login, page, linesPerPage, orderBy, direction);
+		Page<JogadorDTO> listDto = list.map(obj -> Jogador.toDTO(obj));  
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@PutMapping("/{id}")
@@ -84,9 +98,31 @@ public class JogadorResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping("/{seguidorId}/seguir/{seguidoId}")
-	public ResponseEntity<Void> follow(@PathVariable Integer seguidorId, @PathVariable Integer seguidoId) {
+	@PutMapping("/follow")
+	public ResponseEntity<Void> follow(@RequestParam(value="userid") Integer seguidorId, @RequestParam(value="seguidoid") Integer seguidoId) {
 		jogadorService.follow(seguidorId, seguidoId);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping("/unfollow")
+	public ResponseEntity<Void> unfollow(@RequestParam(value="userid") Integer seguidorId, @RequestParam(value="seguidoid") Integer seguidoId) {
+		jogadorService.unfollow(seguidorId, seguidoId);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping(value="/{id}/fotoperfil")
+	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name="file") MultipartFile file, @PathVariable(name ="id") Integer id) {
+		URI uri = jogadorService.uploadProfilePicture(file, id);
+		return ResponseEntity.created(uri).build();
+	}
+	
+	@PutMapping(value="/{id}/videos")
+	public ResponseEntity<Void> uploadVideo(
+			@RequestParam(name="file") MultipartFile file, 
+			@RequestParam(name="title") String title,
+			@RequestParam(name="desc") String desc,
+			@PathVariable(name ="id") Integer id) {
+		URI uri = jogadorService.uploadVideos(file, id, title, desc);
+		return ResponseEntity.created(uri).build();
 	}
 }
